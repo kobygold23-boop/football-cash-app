@@ -1,67 +1,66 @@
+// Get canvas
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Canvas size
+// Set canvas size
 canvas.width = 360;
-canvas.height = 600;
+canvas.height = 500;
 
 // Player object
 const player = {
-  x: canvas.width / 2,
-  y: canvas.height - 80,
-  radius: 15,
+  x: 170,
+  y: 420,
+  width: 30,
+  height: 40,
   speed: 5
 };
 
 // Controls
-const keys = {};
+let leftPressed = false;
+let rightPressed = false;
+let upPressed = false;
+let downPressed = false;
 
-// Listen for key press
-window.addEventListener("keydown", (e) => {
-  keys[e.key] = true;
+// Listen for key presses
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") leftPressed = true;
+  if (e.key === "ArrowRight") rightPressed = true;
+  if (e.key === "ArrowUp") upPressed = true;
+  if (e.key === "ArrowDown") downPressed = true;
 });
 
-window.addEventListener("keyup", (e) => {
-  keys[e.key] = false;
+document.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") leftPressed = false;
+  if (e.key === "ArrowRight") rightPressed = false;
+  if (e.key === "ArrowUp") upPressed = false;
+  if (e.key === "ArrowDown") downPressed = false;
 });
 
-// Update player position
-function update() {
-  if (keys["ArrowLeft"] && player.x > player.radius) {
-    player.x -= player.speed;
-  }
-  if (keys["ArrowRight"] && player.x < canvas.width - player.radius) {
-    player.x += player.speed;
-  }
-  if (keys["ArrowUp"] && player.y > player.radius) {
-    player.y -= player.speed;
-  }
-  if (keys["ArrowDown"] && player.y < canvas.height - player.radius) {
-    player.y += player.speed;
-  }
-}
-
-// Draw everything
-function draw() {
-  // Clear screen
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Field background
+// Draw football field
+function drawField() {
   ctx.fillStyle = "green";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-  // Player
-  ctx.beginPath();
-  ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+// Draw player
+function drawPlayer() {
   ctx.fillStyle = "blue";
-  ctx.fill();
-  ctx.closePath();
+  ctx.fillRect(player.x, player.y, player.width, player.height);
+}
+
+// Update player position
+function movePlayer() {
+  if (leftPressed && player.x > 0) player.x -= player.speed;
+  if (rightPressed && player.x + player.width < canvas.width) player.x += player.speed;
+  if (upPressed && player.y > 0) player.y -= player.speed;
+  if (downPressed && player.y + player.height < canvas.height) player.y += player.speed;
 }
 
 // Game loop
 function gameLoop() {
-  update();
-  draw();
+  drawField();
+  movePlayer();
+  drawPlayer();
   requestAnimationFrame(gameLoop);
 }
 
