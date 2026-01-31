@@ -37,3 +37,12 @@ body {
   left: 50%;
   top: 40%;
 }
+#ball {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: 120px;
+}
