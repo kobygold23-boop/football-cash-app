@@ -1,31 +1,38 @@
 const player = document.getElementById("player");
-const pitch = document.getElementById("pitch");
+const ball = document.getElementById("ball");
 
 let x = 135;
 let y = 430;
-const speed = 10;
+const step = 10;
 
-function updatePlayer() {
+function updatePosition() {
   player.style.left = x + "px";
   player.style.top = y + "px";
+
+  // Ball follows the player
+  ball.style.left = (x + 5) + "px";
+  ball.style.top = (y - 15) + "px";
 }
 
 function moveUp() {
-  if (y > 0) y -= speed;
-  updatePlayer();
+  y -= step;
+  updatePosition();
 }
 
 function moveDown() {
-  if (y < pitch.clientHeight - player.clientHeight) y += speed;
-  updatePlayer();
+  y += step;
+  updatePosition();
 }
 
 function moveLeft() {
-  if (x > 0) x -= speed;
-  updatePlayer();
+  x -= step;
+  updatePosition();
 }
 
 function moveRight() {
-  if (x < pitch.clientWidth - player.clientWidth) x += speed;
-  updatePlayer();
+  x += step;
+  updatePosition();
 }
+
+// Initial position
+updatePosition();
