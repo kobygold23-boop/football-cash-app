@@ -1,6 +1,18 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowUp") moveUp = true;
+  if (e.key === "ArrowDown") moveDown = true;
+  if (e.key === "ArrowLeft") moveLeft = true;
+  if (e.key === "ArrowRight") moveRight = true;
+});
 
+document.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowUp") moveUp = false;
+  if (e.key === "ArrowDown") moveDown = false;
+  if (e.key === "ArrowLeft") moveLeft = false;
+  if (e.key === "ArrowRight") moveRight = false;
+});
 // Resize canvas for mobile
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 100;
@@ -12,7 +24,10 @@ const player = {
   size: 30,
   speed: 6
 };
-
+let moveUp = false;
+let moveDown = false;
+let moveLeft = false;
+let moveRight = false;
 // Ball
 const ball = {
   x: canvas.width / 2,
@@ -103,7 +118,20 @@ window.addEventListener("keydown", e => {
   if (e.key === "ArrowDown") player.y += player.speed;
 });
 
-// 🟢 GAME LOOP (THIS WAS MISSING)
+// 🟢 GAME LOOP (THISfunction updatePlayer() {
+  if (moveUp) player.y -= player.speed;
+  if (moveDown) player.y += player.speed;
+  if (moveLeft) player.x -= player.speed;
+  if (moveRight) player.x += player.speed;
+
+  // Keep player inside the pitch
+  if (player.x < 10) player.x = 10;
+  if (player.y < 10) player.y = 10;
+  if (player.x + player.size > canvas.width - 10)
+    player.x = canvas.width - player.size - 10;
+  if (player.y + player.size > canvas.height - 10)
+    player.y = canvas.height - player.size - 10;
+} WAS MISSING)
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -111,7 +139,7 @@ function gameLoop() {
   drawPlayer();
   drawBall();
   drawScore();
-
+updatePlayer();
   updateBall();
   kickBall();
   checkGoal();
