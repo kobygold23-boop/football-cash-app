@@ -1,68 +1,54 @@
-// Get canvas
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Set canvas size
-canvas.width = 360;
-canvas.height = 500;
+canvas.width = 400;
+canvas.height = 600;
 
-// Player object
-const player = {
-  x: 170,
-  y: 420,
-  width: 30,
+// Player
+let player = {
+  x: 180,
+  y: 500,
+  width: 40,
   height: 40,
   speed: 5
 };
 
 // Controls
-let leftPressed = false;
-let rightPressed = false;
-let upPressed = false;
-let downPressed = false;
+let keys = {};
 
-// Listen for key presses
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") leftPressed = true;
-  if (e.key === "ArrowRight") rightPressed = true;
-  if (e.key === "ArrowUp") upPressed = true;
-  if (e.key === "ArrowDown") downPressed = true;
+  keys[e.key] = true;
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft") leftPressed = false;
-  if (e.key === "ArrowRight") rightPressed = false;
-  if (e.key === "ArrowUp") upPressed = false;
-  if (e.key === "ArrowDown") downPressed = false;
+  keys[e.key] = false;
 });
 
-// Draw football field
-function drawField() {
-  ctx.fillStyle = "green";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+function movePlayer() {
+  if (keys["ArrowLeft"] && player.x > 0) {
+    player.x -= player.speed;
+  }
+  if (keys["ArrowRight"] && player.x < canvas.width - player.width) {
+    player.x += player.speed;
+  }
+  if (keys["ArrowUp"] && player.y > 0) {
+    player.y -= player.speed;
+  }
+  if (keys["ArrowDown"] && player.y < canvas.height - player.height) {
+    player.y += player.speed;
+  }
 }
 
-// Draw player
 function drawPlayer() {
   ctx.fillStyle = "blue";
   ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
-// Update player position
-function movePlayer() {
-  if (leftPressed && player.x > 0) player.x -= player.speed;
-  if (rightPressed && player.x + player.width < canvas.width) player.x += player.speed;
-  if (upPressed && player.y > 0) player.y -= player.speed;
-  if (downPressed && player.y + player.height < canvas.height) player.y += player.speed;
-}
-
-// Game loop
 function gameLoop() {
-  drawField();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   movePlayer();
   drawPlayer();
   requestAnimationFrame(gameLoop);
 }
 
-// Start game
 gameLoop();
