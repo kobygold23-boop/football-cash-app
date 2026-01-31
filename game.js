@@ -1,39 +1,38 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const player = document.getElementById("player");
+const field = document.getElementById("field");
 
-// Canvas size (match your screen)
-canvas.width = 360;
-canvas.height = 600;
+let x = 140;
+let y = 380;
+const speed = 10;
 
-// Player
-let player = {
-  x: canvas.width / 2 - 15,
-  y: canvas.height - 80,
-  size: 30,
-  speed: 10
-};
+// Apply starting position
+player.style.left = x + "px";
+player.style.top = y + "px";
 
-// Draw player
-function drawPlayer() {
-  ctx.fillStyle = "blue";
-  ctx.fillRect(player.x, player.y, player.size, player.size);
+function moveUp() {
+  if (y > 0) {
+    y -= speed;
+    player.style.top = y + "px";
+  }
 }
 
-// Clear screen
-function clear() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+function moveDown() {
+  if (y < field.clientHeight - player.clientHeight) {
+    y += speed;
+    player.style.top = y + "px";
+  }
 }
 
-// Game loop
-function gameLoop() {
-  clear();
-  drawPlayer();
-  requestAnimationFrame(gameLoop);
-}
-
-// Movement functions (BUTTONS)
 function moveLeft() {
-  if (player.x > 0) player.x -= player.speed;
+  if (x > 0) {
+    x -= speed;
+    player.style.left = x + "px";
+  }
 }
 
 function moveRight() {
+  if (x < field.clientWidth - player.clientWidth) {
+    x += speed;
+    player.style.left = x + "px";
+  }
+}
