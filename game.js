@@ -1,7 +1,18 @@
 let score = 0;
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+function movePlayer() {
+  const speed = 4;
 
+  if (keys["ArrowUp"] || keys["w"]) player.y -= speed;
+  if (keys["ArrowDown"] || keys["s"]) player.y += speed;
+  if (keys["ArrowLeft"] || keys["a"]) player.x -= speed;
+  if (keys["ArrowRight"] || keys["d"]) player.x += speed;
+
+  // Keep player inside pitch
+  player.x = Math.max(10, Math.min(canvas.width - player.size - 10, player.x));
+  player.y = Math.max(10, Math.min(canvas.height - player.size - 10, player.y));
+}
 // Player
 let player = {
   x: 140,
@@ -48,3 +59,15 @@ function drawBall( ) {
 }
 
 function drawScore() {
+function movePlayer() {
+  const speed = 4;
+
+  if (keys["ArrowUp"] || keys["w"]) player.y -= speed;
+  if (keys["ArrowDown"] || keys["s"]) player.y += speed;
+  if (keys["ArrowLeft"] || keys["a"]) player.x -= speed;
+  if (keys["ArrowRight"] || keys["d"]) player.x += speed;
+
+  // Keep player inside pitch
+  player.x = Math.max(10, Math.min(canvas.width - player.size - 10, player.x));
+  player.y = Math.max(10, Math.min(canvas.height - player.size - 10, player.y));
+}
