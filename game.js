@@ -17,17 +17,14 @@ function moveRight() {
 }
 
 function move(dx, dy) {
-  // Player position
-  let px = player.offsetLeft + dx;
-  let py = player.offsetTop + dy;
+  // Move player
+  player.style.left = player.offsetLeft + dx + "px";
+  player.style.top = player.offsetTop + dy + "px";
 
-  player.style.left = px + "px";
-  player.style.top = py + "px";
-
-  // Ball collision check
+  // If touching the ball, push it forward
   if (isColliding(player, ball)) {
-    ball.style.left = ball.offsetLeft + dx + "px";
-    ball.style.top = ball.offsetTop + dy + "px";
+    ball.style.left = ball.offsetLeft + dx * 1.2 + "px";
+    ball.style.top = ball.offsetTop + dy * 1.2 + "px";
   }
 }
 
