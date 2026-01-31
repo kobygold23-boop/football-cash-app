@@ -5,7 +5,9 @@ body {
   color: white;
   padding-top: 50px;
 }
-
+#player {
+  position: absolute;
+}
 button {
   padding: 12px 20px;
   font-size: 16px;
