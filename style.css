@@ -28,3 +28,12 @@ body {
   margin: 6px;
   padding: 10px 14px;
 }
+#ball {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+}
