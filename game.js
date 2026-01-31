@@ -1,38 +1,44 @@
 const player = document.getElementById("player");
 const ball = document.getElementById("ball");
 
-let x = 135;
-let y = 430;
-const step = 10;
-
-function updatePosition() {
-  player.style.left = x + "px";
-  player.style.top = y + "px";
-
-  // Ball follows the player
-  ball.style.left = (x + 5) + "px";
-  ball.style.top = (y - 15) + "px";
-}
+let step = 10;
 
 function moveUp() {
-  y -= step;
-  updatePosition();
+  move(0, -step);
 }
-
 function moveDown() {
-  y += step;
-  updatePosition();
+  move(0, step);
 }
-
 function moveLeft() {
-  x -= step;
-  updatePosition();
+  move(-step, 0);
 }
-
 function moveRight() {
-  x += step;
-  updatePosition();
+  move(step, 0);
 }
 
-// Initial position
-updatePosition();
+function move(dx, dy) {
+  // Player position
+  let px = player.offsetLeft + dx;
+  let py = player.offsetTop + dy;
+
+  player.style.left = px + "px";
+  player.style.top = py + "px";
+
+  // Ball collision check
+  if (isColliding(player, ball)) {
+    ball.style.left = ball.offsetLeft + dx + "px";
+    ball.style.top = ball.offsetTop + dy + "px";
+  }
+}
+
+function isColliding(a, b) {
+  let ar = a.getBoundingClientRect();
+  let br = b.getBoundingClientRect();
+
+  return !(
+    ar.right < br.left ||
+    ar.left > br.right ||
+    ar.bottom < br.top ||
+    ar.top > br.bottom
+  );
+}
