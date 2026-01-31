@@ -1,3 +1,4 @@
+let score = 0;
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -39,56 +40,11 @@ function drawPlayer() {
 }
 
 // Draw ball
-function drawBall() {
+function drawBall( ) {
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
   ctx.fillStyle = "yellow";
   ctx.fill();
 }
 
-// Collision & kick
-function kickBall() {
-  let dx = ball.x - (player.x + player.size / 2);
-  let dy = ball.y - (player.y + player.size / 2);
-  let distance = Math.sqrt(dx * dx + dy * dy);
-
-  if (distance < ball.radius + player.size / 2) {
-    ball.vx = dx * 0.3;
-    ball.vy = dy * 0.3;
-  }
-}
-
-// Ball movement + friction
-function updateBall() {
-  ball.x += ball.vx;
-  ball.y += ball.vy;
-
-  ball.vx *= 0.95;
-  ball.vy *= 0.95;
-
-  // Wall bounce
-  if (ball.x < 10 || ball.x > canvas.width - 10) ball.vx *= -1;
-  if (ball.y < 10 || ball.y > canvas.height - 10) ball.vy *= -1;
-}
-
-// Controls
-function moveUp() { player.y -= player.speed; }
-function moveDown() { player.y += player.speed; }
-function moveLeft() { player.x -= player.speed; }
-function moveRight() { player.x += player.speed; }
-
-// Game loop
-function gameLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  drawPitch();
-  drawPlayer();
-  drawBall();
-
-  kickBall();
-  updateBall();
-
-  requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
+function drawScore() {
