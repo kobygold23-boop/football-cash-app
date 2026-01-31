@@ -1,8 +1,9 @@
 const player = document.getElementById("player");
+const pitch = document.getElementById("pitch");
 
 let x = 135;
 let y = 430;
-const step = 10;
+const speed = 10;
 
 function updatePlayer() {
   player.style.left = x + "px";
@@ -10,27 +11,21 @@ function updatePlayer() {
 }
 
 function moveUp() {
-  y -= step;
-  if (y < 0) y = 0;
+  if (y > 0) y -= speed;
   updatePlayer();
 }
 
 function moveDown() {
-  y += step;
-  if (y > 470) y = 470;
+  if (y < pitch.clientHeight - player.clientHeight) y += speed;
   updatePlayer();
 }
 
 function moveLeft() {
-  x -= step;
-  if (x < 0) x = 0;
+  if (x > 0) x -= speed;
   updatePlayer();
 }
 
 function moveRight() {
-  x += step;
-  if (x > 270) x = 270;
+  if (x < pitch.clientWidth - player.clientWidth) x += speed;
   updatePlayer();
 }
-
-updatePlayer();
